@@ -1,20 +1,20 @@
 ---
 layout: workshop      # DON'T CHANGE THIS.
 root: .               # DON'T CHANGE THIS EITHER.  (THANK YOU.)
-carpentry: "FIXME"    # what kind of Carpentry (must be either "dc" or "swc")
-venue: "FIXME"        # brief name of host site without address (e.g., "Euphoric State University")
-address: "FIXME"      # full street address of workshop (e.g., "Room A, 123 Forth Street, Blimingen, Euphoria")
-country: "FIXME"      # lowercase two-letter ISO country code such as "fr" (see https://en.wikipedia.org/wiki/ISO_3166-1)
-language: "FIXME"     # lowercase two-letter ISO language code such as "fr" (see https://en.wikipedia.org/wiki/ISO_639-1)
-latlng: "FIXME"       # decimal latitude and longitude of workshop venue (e.g., "41.7901128,-87.6007318" - use http://www.latlong.net/)
-humandate: "FIXME"    # human-readable dates for the workshop (e.g., "Feb 17-18, 2020")
-humantime: "FIXME"    # human-readable times for the workshop (e.g., "9:00 am - 4:30 pm")
-startdate: FIXME      # machine-readable start date for the workshop in YYYY-MM-DD format like 2015-01-01
-enddate: FIXME        # machine-readable end date for the workshop in YYYY-MM-DD format like 2015-01-02
-instructor: ["FIXME"] # boxed, comma-separated list of instructors' names as strings, like ["Kay McNulty", "Betty Jennings", "Betty Snyder"]
-helper: ["FIXME"]     # boxed, comma-separated list of helpers' names, like ["Marlyn Wescoff", "Fran Bilas", "Ruth Lichterman"]
-contact: "FIXME"      # contact email address for host, lead instructor, or whoever else is handling questions
-etherpad:             # optional: URL for the workshop Etherpad if there is one
+carpentry: "swc"    # what kind of Carpentry (must be either "dc" or "swc")
+venue: "University of Manchester"        # brief name of host site without address (e.g., "Euphoric State University")
+address: "PC 1, Stopford Building, Oxford Road, Manchester, M13 9PT"      # full street address of workshop (e.g., "Room A, 123 Forth Street, Blimingen, Euphoria")
+country: "GB"      # lowercase two-letter ISO country code such as "fr" (see https://en.wikipedia.org/wiki/ISO_3166-1)
+language: "en"     # lowercase two-letter ISO language code such as "fr" (see https://en.wikipedia.end oforg/wiki/ISO_639-1)
+latlng: "53.463982, -2.230349"       # decimal latitude and longitude of workshop venue (e.g., "41.7901128,-87.6007318" - use http://www.latlong.net/)
+humandate: "November 7-8, 2016"    # human-readable dates for the workshop (e.g., "Feb 17-18, 2020")
+humantime: "9:00 am - 5:00 pm"    # human-readable times for the workshop (e.g., "9:00 am - 4:30 pm")
+startdate: 2016-11-07      # machine-readable start date for the workshop in YYYY-MM-DD format like 2015-01-01
+enddate: 2016-11-08        # machine-readable end date for the workshop in YYYY-MM-DD format like 2015-01-02
+instructor: ["Nick Jones, Dave Jones"] # boxed, comma-separated list of instructors' names as strings, like ["Kay McNulty", "Betty Jennings", "Betty Snyder"]
+helper: ["Michael Cornell, Andy Brass"]     # boxed, comma-separated list of helpers' names, like ["Marlyn Wescoff", "Fran Bilas", "Ruth Lichterman"]
+contact: ["a.nenadic@manchester.ac.uk", "andy.brass@manchester.ac.uk"]      # contact email address for host, lead instructor, or whoever else is handling questions
+etherpad: "http://pad.software-carpentry.org/2016-11-07-manchester"            # optional: URL for the workshop Etherpad if there is one
 eventbrite:           # optional: alphanumeric key for Eventbrite registration, e.g., "1234567890AB" (if Eventbrite is being used)
 ---
 
@@ -46,12 +46,6 @@ eventbrite:           # optional: alphanumeric key for Eventbrite registration, 
   scrolling="auto">
 </iframe>
 {% endif %}
-
-<h4>This is the workshop template.  Use it to create your own website.
-Delete this line and email the link to your workshop page to admin@software-carpentry.org.
-If this is a self organized workshop, please be sure to include any other details
-Software Carpentry staff may need to know in your email.</h4>
-
 
 <h2 id="general">General Information</h2>
 
@@ -130,7 +124,7 @@ Software Carpentry staff may need to know in your email.</h4>
 
   Modify the block below if there are any barriers to accessibility or
   special instructions.
--->
+
 <p id="accessibility">
   <strong>Accessibility:</strong> We are committed to making this workshop
   accessible to everybody.
@@ -148,6 +142,7 @@ Software Carpentry staff may need to know in your email.</h4>
   <a href="mailto:{{page.contact}}">get in touch</a> and we will
   attempt to provide them.
 </p>
+-->
 
 <!--
   CONTACT EMAIL ADDRESS
@@ -156,10 +151,45 @@ Software Carpentry staff may need to know in your email.</h4>
 -->
 <p id="contact">
   <strong>Contact</strong>:
-  Please mail
-  <a href="mailto:{{page.contact}}">{{page.contact}}</a> for more
-  information.
+  Please email
+  {% if page.contact %}
+    {% for contact in page.contact: %}
+      {% if forloop.last and page.contact.size > 1 %}
+        or
+      {% else %}
+        {% unless forloop.first %},{% endunless %}
+      {% endif %}
+      <a href='mailto:{{contact}}'>{{contact}}</a>
+    {% endfor %}
+  {% else %}
+    to-be-announced
+  {% endif %}
+  for more information.
 </p>
+
+<hr/>
+
+<!--
+  ETHERPAD
+
+  At `_misc/etherpad.txt` you will find a template for the etherpad.
+
+  Display the Etherpad for the workshop.  You can set this up in
+  advance or on the first day; either way, make sure you push changes
+  to GitHub after you have its URL.  To create an Etherpad, go to
+
+      http://pad.software-carpentry.org/YYYY-MM-DD-site
+
+  where 'YYYY-MM-DD-site' is the identifier for your workshop,
+  e.g., '2015-06-10-esu'.
+-->
+{% if page.etherpad %}
+<p id="etherpad">
+  <strong>Etherpad:</strong> <a href="{{page.etherpad}}">{{page.etherpad}}</a>.
+  <br/>
+  We will use this Etherpad for chatting, taking notes, and sharing URLs and bits of code during the workshop.
+</p>
+{% endif %}
 
 <hr/>
 
@@ -202,28 +232,6 @@ Software Carpentry staff may need to know in your email.</h4>
     </table>
   </div>
 </div>
-
-<!--
-  ETHERPAD
-
-  At `_misc/etherpad.txt` you will find a template for the etherpad.
-
-  Display the Etherpad for the workshop.  You can set this up in
-  advance or on the first day; either way, make sure you push changes
-  to GitHub after you have its URL.  To create an Etherpad, go to
-
-      http://pad.software-carpentry.org/YYYY-MM-DD-site
-
-  where 'YYYY-MM-DD-site' is the identifier for your workshop,
-  e.g., '2015-06-10-esu'.
--->
-{% if page.etherpad %}
-<p id="etherpad">
-  <strong>Etherpad:</strong> <a href="{{page.etherpad}}">{{page.etherpad}}</a>.
-  <br/>
-  We will use this Etherpad for chatting, taking notes, and sharing URLs and bits of code.
-</p>
-{% endif %}
 
 <hr/>
 
